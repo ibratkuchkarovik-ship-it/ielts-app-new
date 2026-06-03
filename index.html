@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pizza IELTS Companion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --blue:#0066cc;
+  --blue2:#004fa3;
+  --yellow:#ffd43b;
+  --bg:#f4f8ff;
+  --text:#102033;
+  --muted:#6b7280;
+  --card:#ffffff;
+  --danger:#ef4444;
+  --success:#16a34a;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,var(--blue2),var(--blue));
+  color:var(--text);
+}
+.app{min-height:100vh;padding:20px}
+.card{
+  background:var(--card);
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 20px 50px rgba(0,0,0,.15);
+}
+.login{max-width:430px;margin:60px auto}
+.logo{width:92px;display:block;margin:0 auto 16px}
+h1,h2,h3{margin:0 0 14px}
+p{color:var(--muted)}
+input,textarea,button,select{font:inherit}
+input,textarea{
+  width:100%;
+  padding:14px;
+  border:1px solid #d8e2f0;
+  border-radius:14px;
+  margin:8px 0;
+}
+button{
+  border:0;
+  border-radius:14px;
+  padding:12px 18px;
+  background:var(--blue);
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+}
+button.secondary{background:#e8f1ff;color:var(--blue)}
+button.yellow{background:var(--yellow);color:#111}
+.topbar{
+  background:#fff;
+  border-radius:22px;
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
+}
+.topbar img{height:44px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:14px;
+}
+.lesson-card,.task-card{
+  background:#fff;
+  border-radius:20px;
+  padding:18px;
+  cursor:pointer;
+  border:1px solid #e5edf8;
+  transition:.2s;
+}
+.lesson-card:hover,.task-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 25px rgba(0,0,0,.12);
+}
+.badge{
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:99px;
+  background:#e8f1ff;
+  color:var(--blue);
+  font-size:12px;
+  font-weight:700;
+}
+.progress{
+  height:9px;
+  background:#e5edf8;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:12px;
+}
+.progress span{display:block;height:100%;background:var(--yellow)}
+.hidden{display:none!important}
+.task-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  height:calc(100vh - 130px);
+}
+.panel{
+  background:#fff;
+  border-radius:20px;
+  padding:18px;
+  overflow:auto;
+}
+.question{
+  padding:12px;
+  border:1px solid #e5edf8;
+  border-radius:14px;
+  margin:10px 0;
+}
+.options label{
+  display:block;
+  padding:9px;
+  margin:6px 0;
+  background:#f4f8ff;
+  border-radius:10px;
+}
+.blank-input{width:130px;display:inline-block;margin:4px;padding:8px}
+.audio-box{
+  background:#eef6ff;
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:14px;
+}
+.writing-img{
+  max-width:100%;
+  border-radius:16px;
+  border:1px solid #ddd;
+  margin-bottom:14px;
+}
+
+.listening-img{
+  max-width:100%;
+  display:block;
+  border-radius:16px;
+  border:1px solid #d8e2f0;
+  margin:14px 0 18px;
+  background:#fff;
+}
+.matching-instructions{
+  margin:10px 0 14px;
+}
+.option-bank{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin:14px 0 20px;
+  padding:14px;
+  border:1px solid #d8e2f0;
+  border-radius:16px;
+  background:#f8fbff;
+}
+.option-bank-row{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  font-size:17px;
+  line-height:1.45;
+}
+.option-letter{
+  min-width:28px;
+  height:28px;
+  border-radius:8px;
+  background:#e8f1ff;
+  color:var(--blue);
+  font-weight:900;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+textarea.writing{min-height:360px;resize:vertical}
+.result{
+  padding:18px;
+  border-radius:18px;
+  background:#f0fdf4;
+  color:#14532d;
+  margin-top:14px;
+}
+.highlighted{background:yellow}
+.admin-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+}
+.admin-table th,.admin-table td{
+  padding:12px;
+  border-bottom:1px solid #e5edf8;
+  text-align:left;
+}
+.admin-table th{
+  color:var(--muted);
+  font-size:13px;
+}
+.admin-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:12px 0;
+}
+.stat-card{
+  background:#f4f8ff;
+  border:1px solid #e5edf8;
+  border-radius:18px;
+  padding:16px;
+}
+
+.reading-paragraph{
+  font-size:18px;
+  line-height:1.75;
+  margin:0 0 22px;
+  text-align:justify;
+}
+.reading-paragraph.with-label{
+  display:grid;
+  grid-template-columns:36px 1fr;
+  gap:10px;
+  align-items:start;
+}
+.paragraph-label{
+  color:var(--blue);
+  font-weight:900;
+  font-size:22px;
+  line-height:1.6;
+}
+.inline-blank{
+  width:145px;
+  display:inline-block;
+  padding:7px 10px;
+  margin:0 4px;
+  border:1px solid #bcd2ee;
+  border-radius:10px;
+  background:#fff;
+  vertical-align:middle;
+}
+.question-number{
+  color:var(--blue);
+  font-weight:900;
+  margin-right:6px;
+}
+.gapfill-line{
+  font-size:18px;
+  line-height:1.75;
+  margin:12px 0;
+}
+.loading-note{
+  padding:14px;
+  border-radius:14px;
+  background:#eef6ff;
+  color:var(--blue);
+  font-weight:700;
+}
+button:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+.writing-card{
+  background:#f4f8ff;
+  border:1px solid #e5edf8;
+  border-radius:18px;
+  padding:16px;
+  margin:12px 0;
+}
+.writing-response-box{
+  white-space:pre-wrap;
+  line-height:1.7;
+  background:#fff;
+  border:1px solid #e5edf8;
+  border-radius:16px;
+  padding:18px;
+  margin-top:12px;
+  max-height:500px;
+  overflow:auto;
+}
+
+
+.question-group{
+  margin:0 0 22px;
+  padding:14px;
+  border:1px solid #d8e2f0;
+  border-radius:18px;
+  background:#fbfdff;
+}
+.question-group-title{
+  font-weight:900;
+  color:var(--blue);
+  margin:0 0 10px;
+  font-size:18px;
+}
+.question-group-instruction{
+  color:var(--muted);
+  margin:0 0 10px;
+  line-height:1.5;
+}
+.option-bank.compact{
+  margin:10px 0 14px;
+  padding:12px;
+}
+.option-bank.roman .option-letter{
+  min-width:42px;
+  text-transform:lowercase;
+}
+
+@media(max-width:800px){
+  .task-layout{grid-template-columns:1fr;height:auto}
+  .panel{max-height:none}
+}
+@media(orientation:landscape) and (max-width:900px){
+  .task-layout{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+  <div id="globalLoading" class="hidden loading-note" style="position:fixed;right:20px;bottom:20px;z-index:9999;">Loading...</div>
+
+  <section id="loginScreen" class="login card">
+    <img src="logo.jpg" class="logo" alt="Pizza Academy Logo">
+    <h1>IELTS Companion</h1>
+    <p>Enter your details to continue.</p>
+    <input id="firstName" placeholder="Name">
+    <input id="lastName" placeholder="Surname">
+    <input id="phoneLast7" placeholder="Last 7 phone digits" maxlength="7">
+    <button onclick="login()">Enter Platform</button>
+    <button class="secondary" style="margin-top:10px;width:100%;" onclick="showAdminLogin()">Admin Panel</button>
+    <p id="loginMsg"></p>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <div class="topbar">
+      <div>
+        <img src="logo.jpg" alt="Pizza Academy Logo">
+        <strong id="studentName"></strong>
+        <span id="studentGroup" class="badge"></span>
+      </div>
+      <button class="secondary" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="card">
+      <h2>Lessons</h2>
+      <p>Select a lesson and start practicing.</p>
+      <div id="lessonGrid" class="grid"></div>
+    </div>
+  </section>
+
+  <section id="taskListScreen" class="hidden">
+    <div class="topbar">
+      <button class="secondary" onclick="showDashboard()">← Lessons</button>
+      <h2 id="lessonTitle"></h2>
+    </div>
+    <div class="card">
+      <div id="taskList" class="grid"></div>
+    </div>
+  </section>
+
+  <section id="taskScreen" class="hidden">
+    <div class="topbar">
+      <button class="secondary" onclick="backToTasks()">← Tasks</button>
+      <div>
+        <strong id="taskTitle"></strong>
+        <span id="timerBox" class="badge"></span>
+      </div>
+      <button id="submitBtn" data-no-disable="true" onclick="submitCurrentTask()">Submit</button>
+    </div>
+
+    <div id="taskContainer"></div>
+  </section>
+
+
+  <section id="adminLoginScreen" class="login card hidden">
+    <img src="logo.jpg" class="logo" alt="Pizza Academy Logo">
+    <h1>Admin Panel</h1>
+    <p>Enter admin credentials.</p>
+    <input id="adminUsername" placeholder="Login">
+    <input id="adminPassword" type="password" placeholder="Password">
+    <button onclick="adminLogin()">Enter Admin Panel</button>
+    <button class="secondary" style="margin-top:10px;width:100%;" onclick="show('loginScreen')">Back to Student Login</button>
+    <p id="adminLoginMsg"></p>
+  </section>
+
+  <section id="adminDashboard" class="hidden">
+    <div class="topbar">
+      <div>
+        <img src="logo.jpg" alt="Pizza Academy Logo">
+        <strong>Admin Dashboard</strong>
+        <span class="badge">Pizza IELTS Companion</span>
+      </div>
+      <button class="secondary" onclick="adminLogout()">Logout</button>
+    </div>
+
+    <div class="card">
+      <h2>Groups</h2>
+      <p>Select a group to view students, results, and writing submissions.</p>
+      <div id="adminGroups" class="grid"></div>
+    </div>
+
+    <div id="adminGroupView" class="card hidden" style="margin-top:18px;">
+      <h2 id="adminGroupTitle"></h2>
+      <div id="adminStudents"></div>
+    </div>
+
+    <div id="adminStudentView" class="card hidden" style="margin-top:18px;">
+      <h2 id="adminStudentTitle"></h2>
+      <div id="adminStudentAnalytics"></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDb9PCFgRum5fGKdW1Lb_e97UxIAkrZWTjOF1T3v46s8XjRdMbhcmgVdrdXddAO4ytFw/exec';
+
+let STUDENT = null;
+let CURRENT_LESSON = null;
+let CURRENT_TASK = null;
+let CURRENT_ATTEMPT = 1;
+let START_TIME = null;
+let TIMER_INTERVAL = null;
+let ADMIN_AUTH = false;
+let IS_SUBMITTING = false;
+
+async function api(action, data = {}) {
+  setLoading(true);
+  try{
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify({
+        action: action,
+        ...data
+      })
+    });
+    return await res.json();
+  } finally {
+    setLoading(false);
+  }
+}
+
+function setLoading(isLoading){
+  const loader = qs('globalLoading');
+  if(loader) loader.classList.toggle('hidden', !isLoading);
+  document.querySelectorAll('button').forEach(btn=>{
+    if(btn.dataset.noDisable === 'true') return;
+    btn.disabled = isLoading;
+  });
+}
+
+function qs(id){return document.getElementById(id)}
+
+function show(id){
+  ['loginScreen','dashboard','taskListScreen','taskScreen','adminLoginScreen','adminDashboard'].forEach(x=>qs(x).classList.add('hidden'));
+  qs(id).classList.remove('hidden');
+}
+
+async function login(){
+  qs('loginMsg').textContent='Checking...';
+
+  const data={
+    firstName:qs('firstName').value.trim(),
+    lastName:qs('lastName').value.trim(),
+    phoneLast7:qs('phoneLast7').value.trim()
+  };
+
+  if(!data.firstName || !data.lastName || data.phoneLast7.length !== 7){
+    qs('loginMsg').textContent='Enter name, surname, and last 7 phone digits.';
+    return;
+  }
+
+  try{
+    const res = await api('login', data);
+
+    if(!res.ok){
+      qs('loginMsg').textContent=res.message || 'Login failed.';
+      return;
+    }
+
+    STUDENT=res.student;
+    localStorage.setItem('student',JSON.stringify(STUDENT));
+    loadDashboard();
+
+  }catch(err){
+    qs('loginMsg').textContent='Connection error. Check Apps Script deployment URL.';
+    console.error(err);
+  }
+}
+
+function logout(){
+  localStorage.removeItem('student');
+  location.reload();
+}
+
+async function loadDashboard(){
+  show('dashboard');
+  qs('studentName').textContent=STUDENT.fullName;
+  qs('studentGroup').textContent=STUDENT.groupName;
+
+  const res=await api('getLessons',{student:STUDENT});
+  const grid=qs('lessonGrid');
+  grid.innerHTML='';
+
+  if(!res.ok){
+    grid.innerHTML='<p>Could not load lessons.</p>';
+    return;
+  }
+
+  res.lessons.forEach(l=>{
+    const div=document.createElement('div');
+    div.className='lesson-card';
+    div.innerHTML=`
+      <h3>Lesson ${l.lesson}</h3>
+      <p>${l.completed}/${l.totalTasks} tasks completed</p>
+      <div class="progress"><span style="width:${l.completionPercent}%"></span></div>
+    `;
+    div.onclick=()=>openLesson(l.lesson);
+    grid.appendChild(div);
+  });
+}
+
+async function openLesson(lesson){
+  CURRENT_LESSON=lesson;
+  show('taskListScreen');
+  qs('lessonTitle').textContent='Lesson '+lesson;
+
+  const box=qs('taskList');
+  box.innerHTML=`<p class="loading-note">Loading Lesson ${lesson} tasks...</p>`;
+
+  const res=await api('getTasksForLesson',{student:STUDENT,lesson});
+
+  if(!res.ok){
+    box.innerHTML='<p>Could not load tasks.</p>';
+    return;
+  }
+
+  box.innerHTML='';
+
+  res.tasks.forEach(t=>{
+    const div=document.createElement('div');
+    div.className='task-card';
+    div.innerHTML=`
+      <span class="badge">${t.Skill}</span>
+      <h3>${t.Title}</h3>
+      <p>${t.TaskType}</p>
+      <p>${t.completed ? 'Official: '+t.officialScore : 'Not completed yet'}</p>
+      <p>Attempts: ${t.attempts}</p>
+    `;
+    div.onclick=()=>openTask(t.TaskID);
+    box.appendChild(div);
+  });
+}
+
+function showDashboard(){loadDashboard()}
+function backToTasks(){openLesson(CURRENT_LESSON)}
+
+async function openTask(taskID){
+  show('taskScreen');
+  qs('taskTitle').textContent='Loading task...';
+  qs('timerBox').textContent='';
+  qs('taskContainer').innerHTML='<div class="card"><p class="loading-note">Loading task...</p></div>';
+
+  const res=await api('loadTask',{student:STUDENT,taskID});
+
+  if(!res.ok){
+    alert(res.message || 'Task not found.');
+    backToTasks();
+    return;
+  }
+
+  CURRENT_TASK=res;
+  CURRENT_ATTEMPT=res.attemptNo;
+  START_TIME=new Date();
+
+  qs('taskTitle').textContent=res.task.Title;
+  renderTask(res);
+  startTaskTimer(res);
+}
+
+function startTaskTimer(data){
+  clearInterval(TIMER_INTERVAL);
+  const timerSeconds = Number(data.passage?.TimerSeconds || data.task?.TimerSeconds || 0);
+  const box=qs('timerBox');
+
+  if(timerSeconds){
+    let remaining=timerSeconds;
+    box.textContent=formatTime(remaining);
+    TIMER_INTERVAL=setInterval(()=>{
+      remaining--;
+      box.textContent=formatTime(remaining);
+      if(remaining<=0){
+        clearInterval(TIMER_INTERVAL);
+        submitCurrentTask();
+      }
+    },1000);
+  }else{
+    TIMER_INTERVAL=setInterval(()=>{
+      const sec=Math.floor((new Date()-START_TIME)/1000);
+      box.textContent='Time: '+formatTime(sec);
+    },1000);
+  }
+}
+
+function formatTime(sec){
+  sec=Math.max(0,Number(sec)||0);
+  const m=Math.floor(sec/60);
+  const s=sec%60;
+  return `${m}:${String(s).padStart(2,'0')}`;
+}
+
+function renderTask(data){
+  const task=data.task;
+  const skill=String(task.Skill).toLowerCase();
+
+  if(skill==='writing') renderWriting(data);
+  else if(skill==='reading') renderReading(data);
+  else if(skill==='listening') renderListening(data);
+  else renderObjective(data);
+}
+
+function assetImageSrc(imageFile){
+  if(!imageFile) return '';
+
+  const clean = String(imageFile).trim().replace(/^image\//i,'');
+
+  // If the sheet already includes the extension, use it exactly first.
+  if(/\.(png|jpg|jpeg|webp)$/i.test(clean)){
+    return `image/${clean}`;
+  }
+
+  // Default first attempt. fallbackImage() will try jpg/jpeg/webp and uppercase too.
+  return `image/${clean}.png`;
+}
+
+function renderWriting(data){
+  const t=data.task;
+
+  console.log('WRITING TASK OBJECT:', t);
+  console.log('WRITING IMAGE FILE:', t.ImageFile);
+
+  const imgSrc=assetImageSrc(t.ImageFile);
+
+  qs('taskContainer').innerHTML=`
+    <div class="task-layout">
+      <div class="panel">
+        <h2>${escapeHtml(t.Title)}</h2>
+        ${imgSrc ? `<img class="writing-img" src="${imgSrc}" data-base="${escapeAttr(t.ImageFile || '')}" onerror="fallbackImage(this)" alt="${escapeHtml(t.Title)}">` : '<p>No image found.</p>'}
+      </div>
+      <div class="panel">
+        <h3>Your response</h3>
+        <p id="wordCount">Words: 0 / ${String(t.TaskType).includes('task2') ? 250 : 150}</p>
+        <textarea id="writingText" class="writing" oninput="updateWordCount()"></textarea>
+      </div>
+    </div>
+  `;
+}
+
+function updateWordCount(){
+  const text=qs('writingText').value.trim();
+  const count=text ? text.split(/\s+/).length : 0;
+  const limit=String(CURRENT_TASK.task.TaskType).includes('task2') ? 250 : 150;
+  qs('wordCount').textContent=`Words: ${count} / ${limit}`;
+}
+
+function renderReading(data){
+  const passage=data.passage || {};
+  const passageText = passage.PassageText || '';
+  const hasInlineBlanks = passageHasAnswerBlanks(passageText);
+
+  qs('taskContainer').innerHTML=`
+    <div class="task-layout">
+      <div class="panel selectable" id="passagePanel">
+        <h2>${escapeHtml(passage.Title || data.task.Title)}</h2>
+        <div class="matching-instructions">${formatInstructionText(passage.Instructions || '')}</div>
+        <div>${formatPassageText(passageText)}</div>
+      </div>
+      <div class="panel selectable">
+        ${renderQuestions(data.questions, {skipInlineGapfills: hasInlineBlanks})}
+      </div>
+    </div>
+  `;
+  enableHighlighting();
+}
+
+function renderListening(data){
+  const t=data.task;
+  const passage=data.passage || {};
+  const audioSrc = t.AudioFile ? `audio/${t.AudioFile}.mp3` : '';
+  const imageSrc = t.ImageFile ? assetImageSrc(t.ImageFile) : '';
+  const passageText = passage.PassageText || '';
+  const hasInlineBlanks = passageHasAnswerBlanks(passageText);
+
+  qs('taskContainer').innerHTML=`
+    <div class="panel selectable">
+      <div class="audio-box">
+        <h3>${escapeHtml(t.Title)}</h3>
+        ${audioSrc ? `<audio controls src="${audioSrc}"></audio>` : ''}
+      </div>
+      ${imageSrc ? `<img class="listening-img" src="${imageSrc}" data-base="${escapeAttr(t.ImageFile || '')}" onerror="fallbackImage(this)" alt="${escapeHtml(t.Title)}">` : ''}
+      <div class="matching-instructions">${formatInstructionText(passage.Instructions || '')}</div>
+      <div>${formatInstructionText(passageText)}</div>
+      ${renderQuestions(data.questions, {skipInlineGapfills: hasInlineBlanks})}
+    </div>
+  `;
+  enableHighlighting();
+}
+
+function renderObjective(data){
+  qs('taskContainer').innerHTML=`
+    <div class="panel">
+      ${renderQuestions(data.questions)}
+    </div>
+  `;
+}
+
+
+function passageHasAnswerBlanks(text){
+  const s = String(text || '');
+  return /\[\s*\d+\s*\]/.test(s) || /\b\d{1,2}\s*(?:_{3,}|-{3,}|—{2,}|–{2,})/.test(s);
+}
+
+function normalizeType(type){
+  return String(type || '').toLowerCase().replace(/[^a-z0-9]/g,'');
+}
+
+function isGapfillType(type){
+  const t = normalizeType(type);
+  return (
+    t.includes('gapfill') ||
+    t.includes('gapfilling') ||
+    t.includes('completion') ||
+    t.includes('summary') ||
+    t.includes('notes') ||
+    t.includes('note') ||
+    t.includes('form') ||
+    t.includes('table') ||
+    t.includes('sentence')
+  );
+}
+
+function isTfngType(type){
+  const t = normalizeType(type);
+  return (
+    t === 'tfng' ||
+    t === 'tfn' ||
+    t.includes('truefalsenotgiven') ||
+    t.includes('truefalse') ||
+    t.includes('notgiven')
+  );
+}
+
+function isYnngType(type){
+  const t = normalizeType(type);
+  return (
+    t === 'ynng' ||
+    t === 'yng' ||
+    t.includes('yesnonotgiven') ||
+    t.includes('yesno')
+  );
+}
+
+function effectiveQuestionNo(q, fallbackIndex){
+  const direct = q.QuestionNo;
+  if(direct !== undefined && direct !== null && String(direct).trim() !== '' && String(direct).trim().toLowerCase() !== 'undefined'){
+    return String(direct).trim();
+  }
+
+  const fromText = String(q.QuestionText || '').match(/\[\s*(\d+)\s*\]|\b(\d{1,2})\s*(?:_{3,}|-{3,}|—{2,}|–{2,})/);
+  if(fromText) return fromText[1] || fromText[2];
+
+  const fromAnswer = String(q.Answer || '').match(/\[\s*(\d+)\s*\]/);
+  if(fromAnswer) return fromAnswer[1];
+
+  return fallbackIndex !== undefined ? String(fallbackIndex + 1) : '';
+}
+
+function blankInputHTML(num){
+  return `<input class="inline-blank" data-q="${escapeAttr(num)}" placeholder="${escapeAttr(num)}">`;
+}
+
+function renderTextWithInlineBlanks(text){
+  let safe = escapeHtml(String(text || ''));
+
+  // [31] style
+  safe = safe.replace(/\[\s*(\d+)\s*\]/g, (_,num)=>blankInputHTML(num));
+
+  // 31 ______ / 31 -------- / 31 ——— style
+  safe = safe.replace(/\b(\d{1,2})\s*(?:_{3,}|-{3,}|—{2,}|–{2,})/g, (_,num)=>blankInputHTML(num));
+
+  return safe;
+}
+
+function prepareParagraphRawText(text){
+  let raw = String(text || '').replace(/\r/g,'').trim();
+
+  // Safer paragraphing:
+  // 1) Keep labels already placed at the start of lines.
+  // 2) Only split embedded A/B/C paragraph labels after strong punctuation.
+  // This prevents option banks like A = properly, B = energy from becoming fake paragraphs.
+  raw = raw.replace(/([.!?])\s+([A-H])\.\s+(?=[A-Z])/g, '$1\n\n$2. ');
+  raw = raw.replace(/([.!?])\s+([A-H])\s+(?=[A-Z][a-z]{2,})/g, '$1\n\n$2. ');
+
+  return raw;
+}
+
+
+function parseOptionBankLine(line){
+  const text = String(line || '').trim();
+  if(!text) return [];
+
+  const matches = [];
+  const add = (label, value, kind='letter') => {
+    const l = String(label || '').trim();
+    const v = String(value || '').trim().replace(/^=\s*/,'').trim();
+    if(!l || !v) return;
+    if(/^(questions?|choose|write|match|complete)\b/i.test(v)) return;
+    matches.push({label:l, text:v, kind});
+  };
+
+  // Strongest format: A = Stuart | B = Chris | C = Lee
+  const eqRe = /(?:^|\||\s)([A-I])\s*=\s*(.+?)(?=\s*\|\s*[A-I]\s*=|\s+[A-I]\s*=|$)/g;
+  let m;
+  while((m = eqRe.exec(text)) !== null){
+    add(m[1].toUpperCase(), m[2], 'letter');
+  }
+  if(matches.length >= 2) return matches;
+
+  // Roman headings, usually vertical or separated by pipes: i Heading | ii Heading
+  const romanRe = /(?:^|\||\s)(xiii|xii|xi|x|ix|viii|vii|vi|iv|iii|ii|i)[\.)]?\s+(.+?)(?=\s*\|\s*(?:xiii|xii|xi|x|ix|viii|vii|vi|iv|iii|ii|i)[\.)]?\s+|\s+(?:xiii|xii|xi|x|ix|viii|vii|vi|iv|iii|ii|i)[\.)]?\s+|$)/gi;
+  while((m = romanRe.exec(text)) !== null){
+    add(m[1].toLowerCase(), m[2], 'roman');
+  }
+  if(matches.length >= 2) return matches;
+
+  // Plain one-line bank: A cook B gardener C guide.
+  // Only parse if the line itself starts with A/B/C option format.
+  if(/^([A-I])[\.)]?\s+/.test(text)){
+    const plainRe = /(?:^|\s)([A-I])[\.)]?\s+(.+?)(?=\s+[A-I][\.)]?\s+|$)/g;
+    while((m = plainRe.exec(text)) !== null){
+      add(m[1].toUpperCase(), m[2], 'letter');
+    }
+  }
+
+  return matches.length >= 2 ? matches : [];
+}
+
+function renderOptionBank(matches){
+  const kind = matches && matches.length ? (matches[0].kind || (/^(xiii|xii|xi|x|ix|viii|vii|vi|iv|iii|ii|i)$/i.test(matches[0].label || '') ? 'roman' : 'letter')) : 'letter';
+  return `
+    <div class="option-bank compact ${kind === 'roman' ? 'roman' : ''}">
+      ${matches.map(item=>`
+        <div class="option-bank-row">
+          <span class="option-letter">${escapeHtml(item.label || item.letter)}</span>
+          <span>${renderTextWithInlineBlanks(item.text)}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+
+function formatInstructionText(text){
+  // This is used for the shared passage/instruction area only.
+  // Do NOT render option banks here; matching banks are shown in the question panel.
+  const raw = String(text || '').replace(/\r/g,'').trim();
+  if(!raw) return '';
+  return formatPassageText(raw);
+}
+
+function formatListeningPassageText(text){
+  return formatInstructionText(text);
+}
+
+
+function formatPassageText(text){
+  const raw = prepareParagraphRawText(text);
+  if(!raw) return '';
+
+  const lines = raw.split('\n');
+  let html = '';
+  let currentLabel = null;
+  let currentText = [];
+
+  function flushParagraph(){
+    const content = currentText.join(' ').replace(/\s+/g,' ').trim();
+    if(!content && !currentLabel) return;
+
+    if(currentLabel){
+      html += `
+        <div class="reading-paragraph with-label">
+          <div class="paragraph-label">${escapeHtml(currentLabel)}.</div>
+          <div>${renderTextWithInlineBlanks(content)}</div>
+        </div>
+      `;
+    }else{
+      html += `<div class="reading-paragraph">${renderTextWithInlineBlanks(content)}</div>`;
+    }
+
+    currentLabel = null;
+    currentText = [];
+  }
+
+  lines.forEach(line=>{
+    const trimmed = line.trim();
+
+    if(!trimmed){
+      flushParagraph();
+      return;
+    }
+
+    const labelMatch = trimmed.match(/^([A-H])[\.\)]\s+(.*)$/);
+
+    if(labelMatch){
+      flushParagraph();
+      currentLabel = labelMatch[1];
+      currentText.push(labelMatch[2]);
+      return;
+    }
+
+    currentText.push(trimmed);
+  });
+
+  flushParagraph();
+  return html;
+}
+
+function renderChoiceQuestion(no, questionText, optionList, values){
+  const opts = optionList && optionList.length ? optionList : values;
+  return `
+    <div class="question">
+      <strong>${escapeHtml(no)}${questionText ? '. ' + escapeHtml(questionText) : ''}</strong>
+      <div class="options">
+        ${opts.map(o=>`
+          <label>
+            <input type="radio" name="q_${escapeAttr(no)}" value="${escapeAttr(o)}">
+            ${escapeHtml(o)}
+          </label>
+        `).join('')}
+      </div>
+    </div>`;
+}
+
+
+function attrValueEquals(selector, attrName, value){
+  const target = String(value);
+  return [...document.querySelectorAll(selector)].find(el => String(el.getAttribute(attrName)) === target) || null;
+}
+
+function checkedRadioByName(name){
+  return [...document.querySelectorAll('input[type="radio"]')].find(el => el.name === name && el.checked) || null;
+}
+
+function checkedCheckboxesByName(name){
+  return [...document.querySelectorAll('input[type="checkbox"]')].filter(el => el.name === name && el.checked);
+}
+
+function matchingOptionValue(option, idx){
+  const raw = String(option || '').trim();
+  const roman = raw.match(/^(xiii|xii|xi|x|ix|viii|vii|vi|iv|iii|ii|i)(?:[\.)]|\s)+(.*)$/i);
+  if(roman) return roman[1].toLowerCase();
+  const letter = raw.match(/^([A-I])(?:[\.)]|\s)+(.*)$/i);
+  if(letter) return letter[1].toUpperCase();
+  if(/^(xiii|xii|xi|x|ix|viii|vii|vi|iv|iii|ii|i)$/i.test(raw)) return raw.toLowerCase();
+  if(/^[A-I]$/i.test(raw)) return raw.toUpperCase();
+  return String.fromCharCode(65 + idx);
+}
+
+
+function matchingOptionLabel(option, idx){
+  const raw = String(option || '').trim();
+  const value = matchingOptionValue(raw, idx);
+  const roman = raw.match(/^(xiii|xii|xi|x|ix|viii|vii|vi|iv|iii|ii|i)(?:[\.)]|\s)+(.*)$/i);
+  const letter = raw.match(/^([A-I])(?:[\.)]|\s)+(.*)$/i);
+  const text = roman ? roman[2].trim() : (letter ? letter[2].trim() : raw);
+  return text ? `${value}. ${text}` : value;
+}
+
+
+function extractOptionBankItemsFromText(text){
+  const raw = String(text || '').replace(/\r/g,'').trim();
+  if(!raw) return [];
+
+  const found = [];
+  const add = (label, value, kind) => {
+    const l = String(label || '').trim();
+    const v = String(value || '').trim().replace(/^=\s*/,'').trim();
+    if(!l || !v) return;
+    if(/^(questions?|choose|write|match|complete)\b/i.test(v)) return;
+    const key = l.toLowerCase();
+    if(!found.some(x => String(x.label).toLowerCase() === key)) found.push({label:l, text:v, kind:kind || 'letter'});
+  };
+
+  // First parse the whole text. This catches C column formats like:
+  // A = Stuart | B = Chris | C = Lee
+  parseOptionBankLine(raw).forEach(x => add(x.label, x.text, x.kind));
+
+  // Then parse line-by-line for vertical option banks.
+  const vertical = [];
+  raw.split('\n').forEach(line => {
+    const trimmed = String(line || '').trim();
+    if(!trimmed) return;
+
+    const parsed = parseOptionBankLine(trimmed);
+    if(parsed.length >= 2){
+      parsed.forEach(x => add(x.label, x.text, x.kind));
+      return;
+    }
+
+    const letterSingle = trimmed.match(/^([A-I])[\.)]?\s*(?:=|-|–|—)?\s+(.+)$/);
+    if(letterSingle) vertical.push({label:letterSingle[1].toUpperCase(), text:letterSingle[2], kind:'letter'});
+
+    const romanSingle = trimmed.match(/^(xiii|xii|xi|x|ix|viii|vii|vi|iv|iii|ii|i)[\.)]?\s*(?:=|-|–|—)?\s+(.+)$/i);
+    if(romanSingle) vertical.push({label:romanSingle[1].toLowerCase(), text:romanSingle[2], kind:'roman'});
+  });
+
+  if(vertical.length >= 2){
+    vertical.forEach(x => add(x.label, x.text, x.kind));
+  }
+
+  return found;
+}
+
+function getCurrentTaskOptionBank(){
+  const p = CURRENT_TASK && CURRENT_TASK.passage ? CURRENT_TASK.passage : {};
+  const text = `${p.Instructions || ''}\n${p.PassageText || ''}`;
+  return extractOptionBankItemsFromText(text);
+}
+
+
+function isMatchingType(type){
+  const t = normalizeType(type);
+  return t.includes('matching') || t.includes('heading') || t.includes('features') || t.includes('information');
+}
+
+function questionGroupTitle(type){
+  const t = normalizeType(type);
+  if(isTfngType(type)) return 'TRUE / FALSE / NOT GIVEN';
+  if(isYnngType(type)) return 'YES / NO / NOT GIVEN';
+  if(isMatchingType(type)) return 'Matching';
+  if(t.includes('mcq') || t.includes('multiplechoice')) return 'Multiple Choice';
+  if(t.includes('multi')) return 'Multiple Answers';
+  if(isGapfillType(type)) return 'Gap Fill';
+  return String(type || 'Questions');
+}
+
+function groupQuestionsForDisplay(questions){
+  const groups = [];
+  (questions || []).forEach(q=>{
+    const key = `${q.TaskID || ''}||${normalizeType(q.QuestionType || '')}`;
+    let group = groups[groups.length - 1];
+    if(!group || group.key !== key){
+      group = {key, taskID:q.TaskID || '', type:q.QuestionType || '', questions:[]};
+      groups.push(group);
+    }
+    group.questions.push(q);
+  });
+  return groups;
+}
+
+function optionItemsFromOptions(options){
+  const opts = (options || []).filter(Boolean);
+  if(!opts.length) return [];
+  return opts.map((o,i)=>{
+    const value = matchingOptionValue(o,i);
+    const label = value;
+    const raw = String(o || '').trim();
+    const roman = raw.match(/^(xiii|xii|xi|x|ix|viii|vii|vi|iv|iii|ii|i)(?:[\.)]|\s)+(.*)$/i);
+    const letter = raw.match(/^([A-I])(?:[\.)]|\s)+(.*)$/i);
+    const text = roman ? roman[2].trim() : (letter ? letter[2].trim() : raw);
+    const kind = /^(xiii|xii|xi|x|ix|viii|vii|vi|iv|iii|ii|i)$/i.test(value) ? 'roman' : 'letter';
+    return {label, text, kind};
+  });
+}
+
+function optionsAreBareLabels(options){
+  const opts = (options || []).map(x=>String(x || '').trim()).filter(Boolean);
+  if(!opts.length) return false;
+  return opts.every(x => /^[A-I]$/i.test(x) || /^(xiii|xii|xi|x|ix|viii|vii|vi|iv|iii|ii|i)$/i.test(x));
+}
+
+function matchingOptionsFromGroup(groupQuestions){
+  const bankFromPassage = getCurrentTaskOptionBank();
+
+  for(const q of (groupQuestions || [])){
+    const options = String(q.Options || '').split('|').map(x=>x.trim()).filter(Boolean);
+    if(options.length && !optionsAreBareLabels(options)) return optionItemsFromOptions(options);
+  }
+
+  if(bankFromPassage.length) return bankFromPassage;
+
+  for(const q of (groupQuestions || [])){
+    const options = String(q.Options || '').split('|').map(x=>x.trim()).filter(Boolean);
+    if(options.length) return optionItemsFromOptions(options);
+  }
+
+  return [];
+}
+
+function renderQuestionGroup(group, opts){
+  const type = String(group.type || '').toLowerCase();
+  const title = questionGroupTitle(group.type);
+  let intro = '';
+
+  if(isMatchingType(type)){
+    const bank = matchingOptionsFromGroup(group.questions);
+    if(bank && bank.length){
+      intro += `<div class="question-group-instruction">Choose from the list below.</div>${renderOptionBank(bank)}`;
+    }else{
+      intro += `<div class="question-group-instruction">Choose from the list.</div>`;
+    }
+  }
+
+  const body = group.questions.map((q,idx)=>renderSingleQuestion(q, idx, opts, group)).join('');
+  if(!body.trim() && !intro.trim()) return '';
+
+  return `
+    <div class="question-group">
+      <div class="question-group-title">${escapeHtml(title)}</div>
+      ${intro}
+      ${body}
+    </div>
+  `;
+}
+
+function renderQuestions(questions, opts = {}){
+  return groupQuestionsForDisplay(questions).map(group=>renderQuestionGroup(group, opts)).join('');
+}
+
+function renderSingleQuestion(q, idx, opts = {}, group = null){
+  const rawType=String(q.QuestionType||'');
+  const type=rawType.toLowerCase();
+  const no=effectiveQuestionNo(q, idx);
+  const questionText = String(q.QuestionText || '').trim();
+  const options=String(q.Options||'').split('|').map(x=>x.trim()).filter(Boolean);
+
+  // If the passage/notes already contain the answer boxes, do not duplicate separate gapfill boxes below.
+  // Do NOT skip TFNG/YNNG/matching/MCQ, because those need separate answer controls.
+  if(opts.skipInlineGapfills && isGapfillType(type) && !isTfngType(type) && !isYnngType(type) && !isMatchingType(type)){
+    return '';
+  }
+
+  if(isTfngType(type)){
+    return renderChoiceQuestion(no, questionText, options, ['TRUE','FALSE','NOT GIVEN']);
+  }
+
+  if(isYnngType(type)){
+    return renderChoiceQuestion(no, questionText, options, ['YES','NO','NOT GIVEN']);
+  }
+
+  if(type==='mcq' || normalizeType(type).includes('mcq') || normalizeType(type).includes('multiplechoice')){
+    return `
+      <div class="question">
+        <strong>${escapeHtml(no)}. ${escapeHtml(questionText || 'Choose the correct answer.')}</strong>
+        <div class="options">
+          ${options.map((o,i)=>`
+            <label><input type="radio" name="q_${escapeAttr(no)}" value="${String.fromCharCode(65+i)}"> ${String.fromCharCode(65+i)}. ${escapeHtml(o)}</label>
+          `).join('')}
+        </div>
+      </div>`;
+  }
+
+  if(isMatchingType(type)){
+    const bankItems = matchingOptionsFromGroup(group ? group.questions : [q]);
+    const bankOptions = bankItems.length ? bankItems.map(x => `${x.label} ${x.text}`) : options;
+    return `
+      <div class="question">
+        <strong>${escapeHtml(no)}. ${escapeHtml(questionText || 'Choose from the list.')}</strong>
+        <select data-q="${escapeAttr(no)}">
+          <option value="">Choose</option>
+          ${bankOptions.map((o,i)=>`<option value="${escapeAttr(matchingOptionValue(o,i))}">${escapeHtml(matchingOptionLabel(o,i))}</option>`).join('')}
+        </select>
+      </div>`;
+  }
+
+  if(type==='multi_select' || type==='multiplesanswer' || type==='multipleanswer' || type==='multi'){
+    return `
+      <div class="question">
+        <strong>${escapeHtml(no)}. ${escapeHtml(questionText || 'Choose the correct answers.')}</strong>
+        <div class="options">
+          ${options.map(o=>`<label><input type="checkbox" name="q_${escapeAttr(no)}" value="${escapeAttr(o)}"> ${escapeHtml(o)}</label>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  if(isGapfillType(type)){
+    let rendered = renderTextWithInlineBlanks(questionText || `[${no}]`);
+
+    // If the question text has no visible blank marker, add a writable box after it.
+    if(!/data-q=/.test(rendered)){
+      rendered = `${escapeHtml(questionText || '')} ${blankInputHTML(no)}`;
+    }
+
+    return `
+      <div class="question gapfill-line">
+        ${rendered}
+      </div>`;
+  }
+
+  // General fallback: always provide a way to answer.
+  return `
+    <div class="question">
+      <strong>${escapeHtml(no)}${questionText ? '. ' + escapeHtml(questionText) : ''}</strong>
+      <input data-q="${escapeAttr(no)}" placeholder="Answer">
+    </div>`;
+}
+
+
+function collectAnswers(){
+  const answers={};
+
+  CURRENT_TASK.questions.forEach((q,idx)=>{
+    const no=effectiveQuestionNo(q, idx);
+    const rawType=String(q.QuestionType||'');
+    const type=rawType.toLowerCase();
+
+    if(!no) return;
+
+    const radioName = `q_${no}`;
+
+    if(type==='mcq' || normalizeType(type).includes('mcq') || normalizeType(type).includes('multiplechoice') || isTfngType(type) || isYnngType(type)){
+      const checked = checkedRadioByName(radioName);
+      answers[no] = checked ? checked.value : '';
+      return;
+    }
+
+    if(type==='multi_select' || type==='multiplesanswer' || type==='multipleanswer' || type==='multi'){
+      const checked = checkedCheckboxesByName(radioName).map(x=>x.value);
+      answers[no] = checked.join('|');
+      return;
+    }
+
+    const el = attrValueEquals('[data-q]', 'data-q', no);
+    answers[no] = el ? el.value : '';
+  });
+
+  return answers;
+}
+
+
+async function submitCurrentTask(){
+  if(IS_SUBMITTING) return;
+
+  if(!CURRENT_TASK || !START_TIME){
+    alert('Task is still loading. Please wait a moment.');
+    return;
+  }
+
+  IS_SUBMITTING = true;
+  clearInterval(TIMER_INTERVAL);
+
+  const submitBtn = qs('submitBtn');
+  const oldSubmitText = submitBtn ? submitBtn.textContent : '';
+
+  if(submitBtn){
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+  }
+
+  try{
+    const durationSeconds=Math.floor((new Date()-START_TIME)/1000);
+    const skill=String(CURRENT_TASK.task.Skill).toLowerCase();
+
+    if(skill==='writing'){
+      const responseText=qs('writingText').value;
+      const res=await api('submitWritingTask',{
+        student:STUDENT,
+        taskID:CURRENT_TASK.task.TaskID,
+        responseText,
+        startedAt:START_TIME.toISOString(),
+        durationSeconds
+      });
+
+      if(!res.ok){
+        alert(res.message || 'Submission failed.');
+        return;
+      }
+
+      alert(`Submitted. Words: ${res.wordCount}. Attempt: ${res.attemptNo}`);
+      backToTasks();
+      return;
+    }
+
+    const answers=collectAnswers();
+
+    const res=await api('submitObjectiveTask',{
+      student:STUDENT,
+      taskID:CURRENT_TASK.task.TaskID,
+      answers,
+      startedAt:START_TIME.toISOString(),
+      durationSeconds
+    });
+
+    if(!res.ok){
+      alert(res.message || 'Submission failed.');
+      return;
+    }
+
+    qs('taskContainer').innerHTML=`
+      <div class="card">
+        <h2>Result</h2>
+        <div class="result">
+          Score: ${res.score}/${res.total}<br>
+          Accuracy: ${res.accuracy}%<br>
+          Attempt: ${res.attemptNo}<br>
+          ${res.isOfficial ? 'Official score locked.' : 'Practice attempt saved.'}
+        </div>
+        <br>
+        <button onclick="backToTasks()">Back to Tasks</button>
+      </div>
+    `;
+
+  }catch(err){
+    console.error(err);
+    alert('Submission failed. Please check your internet connection and try again.');
+  }finally{
+    IS_SUBMITTING=false;
+    if(submitBtn){
+      submitBtn.disabled = false;
+      submitBtn.textContent = oldSubmitText || 'Submit';
+    }
+  }
+}
+
+function enableHighlighting(){
+  document.querySelectorAll('.selectable').forEach(el=>{
+    el.addEventListener('mouseup',()=>{
+      const sel=window.getSelection();
+      if(!sel || sel.toString().trim()==='') return;
+
+      const range=sel.getRangeAt(0);
+      const span=document.createElement('span');
+      span.className='highlighted';
+
+      try{
+        range.surroundContents(span);
+        sel.removeAllRanges();
+      }catch(e){
+        sel.removeAllRanges();
+      }
+    });
+  });
+}
+
+function escapeHtml(str){
+  return String(str ?? '')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'",'&#039;');
+}
+
+function escapeAttr(str){
+  return escapeHtml(str);
+}
+
+function cssEscape(str){
+  if(window.CSS && CSS.escape) return CSS.escape(str);
+  return String(str).replace(/"/g,'\\"');
+}
+
+
+function showAdminLogin(){
+  qs('adminLoginMsg').textContent='';
+  qs('adminUsername').value='';
+  qs('adminPassword').value='';
+  show('adminLoginScreen');
+}
+
+async function adminLogin(){
+  qs('adminLoginMsg').textContent='Checking...';
+
+  const username=qs('adminUsername').value.trim();
+  const password=qs('adminPassword').value.trim();
+
+  if(!username || !password){
+    qs('adminLoginMsg').textContent='Enter login and password.';
+    return;
+  }
+
+  try{
+    const res=await api('adminLogin',{username,password});
+
+    if(!res.ok){
+      qs('adminLoginMsg').textContent=res.message || 'Invalid admin credentials.';
+      return;
+    }
+
+    ADMIN_AUTH=true;
+    localStorage.setItem('adminAuth','true');
+    loadAdminDashboard();
+
+  }catch(err){
+    qs('adminLoginMsg').textContent='Connection error. Check Apps Script deployment URL.';
+    console.error(err);
+  }
+}
+
+function adminLogout(){
+  ADMIN_AUTH=false;
+  localStorage.removeItem('adminAuth');
+  show('loginScreen');
+}
+
+async function loadAdminDashboard(){
+  show('adminDashboard');
+
+  qs('adminGroupView').classList.add('hidden');
+  qs('adminStudentView').classList.add('hidden');
+
+  const box=qs('adminGroups');
+  box.innerHTML='<p>Loading groups...</p>';
+
+  try{
+    const res=await api('getAdminGroups',{});
+
+    if(!res.ok){
+      box.innerHTML='<p>Could not load groups.</p>';
+      return;
+    }
+
+    if(!res.groups || !res.groups.length){
+      box.innerHTML='<p>No results yet. Groups will appear after students submit tasks.</p>';
+      return;
+    }
+
+    box.innerHTML='';
+
+    res.groups.forEach(g=>{
+      const div=document.createElement('div');
+      div.className='lesson-card';
+      div.innerHTML=`
+        <span class="badge">${escapeHtml(g.branch)}</span>
+        <h3>${escapeHtml(g.groupName)}</h3>
+        <p>Students: ${g.students || 0}</p>
+        <p>Attempts: ${g.attempts || 0}</p>
+        <p>Writings: ${g.writings || 0}</p>
+      `;
+      div.onclick=()=>openAdminGroup(g.branch,g.groupName);
+      box.appendChild(div);
+    });
+
+  }catch(err){
+    box.innerHTML='<p>Admin dashboard connection error.</p>';
+    console.error(err);
+  }
+}
+
+async function openAdminGroup(branch,groupName){
+  qs('adminGroupView').classList.remove('hidden');
+  qs('adminStudentView').classList.add('hidden');
+  qs('adminGroupTitle').textContent=`${branch} — ${groupName}`;
+  qs('adminStudents').innerHTML='<p>Loading students...</p>';
+
+  const res=await api('getGroupDashboard',{branch,groupName});
+
+  if(!res.ok){
+    qs('adminStudents').innerHTML='<p>Could not load group data.</p>';
+    return;
+  }
+
+  if(!res.students || !res.students.length){
+    qs('adminStudents').innerHTML='<p>No student results yet.</p>';
+    return;
+  }
+
+  qs('adminStudents').innerHTML=`
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Official Accuracy</th>
+          <th>Objective Attempts</th>
+          <th>Writing Submissions</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${res.students.map(s=>`
+          <tr>
+            <td>${escapeHtml(s.fullName)}</td>
+            <td>${s.accuracy || 0}%</td>
+            <td>${s.objectiveAttempts || 0}</td>
+            <td>${s.writingSubmissions || 0}</td>
+            <td><button class="secondary" onclick="openAdminStudent('${escapeAttr(s.studentID)}','${escapeAttr(s.fullName)}')">Open</button></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+async function openAdminStudent(studentID,fullName){
+  qs('adminStudentView').classList.remove('hidden');
+  qs('adminStudentTitle').textContent=fullName;
+  qs('adminStudentAnalytics').innerHTML='<p>Loading analytics and writings...</p>';
+
+  const [analyticsRes, writingsRes] = await Promise.all([
+    api('getStudentAnalytics',{studentID}),
+    api('getStudentWritings',{studentID})
+  ]);
+
+  let analyticsHTML = '';
+
+  if(analyticsRes.ok && analyticsRes.analytics && analyticsRes.analytics.length){
+    analyticsHTML = `
+      <h3>Question-type analytics</h3>
+      <div class="grid">
+        ${analyticsRes.analytics.map(a=>`
+          <div class="stat-card">
+            <h3>${escapeHtml(a.questionType)}</h3>
+            <p>${a.correct}/${a.total} correct</p>
+            <div class="progress"><span style="width:${a.accuracy || 0}%"></span></div>
+            <p><strong>${a.accuracy || 0}%</strong></p>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }else{
+    analyticsHTML = '<h3>Question-type analytics</h3><p>No question-type analytics yet.</p>';
+  }
+
+  let writingsHTML = '<h3 style="margin-top:22px;">Writing submissions</h3>';
+
+  if(writingsRes.ok && writingsRes.writings && writingsRes.writings.length){
+    writingsHTML += writingsRes.writings.map((w,idx)=>`
+      <div class="writing-card">
+        <h3>${escapeHtml(w.TaskID || 'Writing Task')}</h3>
+        <p>
+          Lesson: ${escapeHtml(w.Lesson || '')} |
+          Type: ${escapeHtml(w.TaskType || '')} |
+          Attempt: ${escapeHtml(w.AttemptNo || '')} |
+          ${w.IsOfficial === true || w.IsOfficial === 'TRUE' ? 'Official' : 'Practice'}
+        </p>
+        <p>Words: ${escapeHtml(w.WordCount || 0)} | Submitted: ${escapeHtml(formatDateTime(w.SubmittedAt))}</p>
+        <button class="secondary" onclick="toggleWritingResponse('writing_${idx}')">Open Writing</button>
+        <div id="writing_${idx}" class="writing-response-box hidden">${escapeHtml(w.ResponseText || '')}</div>
+      </div>
+    `).join('');
+  }else{
+    writingsHTML += '<p>No writing submissions yet.</p>';
+  }
+
+  qs('adminStudentAnalytics').innerHTML = analyticsHTML + writingsHTML;
+}
+
+function toggleWritingResponse(id){
+  qs(id).classList.toggle('hidden');
+}
+
+function formatDateTime(value){
+  if(!value) return '';
+  try{
+    return new Date(value).toLocaleString();
+  }catch(e){
+    return String(value);
+  }
+}
+
+function fallbackImage(img){
+  const rawBase = img.getAttribute('data-base') || img.getAttribute('src') || '';
+  let base = String(rawBase).trim().replace(/^image\//i,'').replace(/\.(png|jpg|jpeg|webp)$/i,'');
+
+  if(!base){
+    img.onerror = null;
+    img.outerHTML = `<p style="color:red">Image not found.</p>`;
+    return;
+  }
+
+  const tried = Number(img.getAttribute('data-try') || '0');
+
+  // Try common extensions and uppercase variants because hosting is case-sensitive.
+  const exts = ['png','jpg','jpeg','webp','PNG','JPG','JPEG','WEBP'];
+
+  if(tried < exts.length){
+    img.setAttribute('data-try', String(tried + 1));
+    img.src = `image/${base}.${exts[tried]}`;
+    return;
+  }
+
+  img.onerror = null;
+  img.outerHTML = `<p style="color:red">Image not found: ${base}</p>`;
+}
+
+window.onload=()=>{
+  const saved=localStorage.getItem('student');
+  const adminSaved=localStorage.getItem('adminAuth');
+
+  if(saved){
+    STUDENT=JSON.parse(saved);
+    loadDashboard();
+    return;
+  }
+
+  if(adminSaved==='true'){
+    ADMIN_AUTH=true;
+    loadAdminDashboard();
+  }
+};
+</script>
+</body>
+</html>
