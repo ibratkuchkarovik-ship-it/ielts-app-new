@@ -310,6 +310,215 @@ button:disabled{
   text-transform:lowercase;
 }
 
+
+/* Student dashboard additions */
+.student-overview{
+  display:grid;
+  gap:18px;
+  margin-bottom:18px;
+}
+.overview-hero{
+  background:
+    radial-gradient(circle at top right, rgba(255,212,59,.32), transparent 28%),
+    linear-gradient(135deg,#ffffff,#eef6ff);
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:28px;
+  padding:24px;
+  box-shadow:0 18px 45px rgba(0,0,0,.12);
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:18px;
+  align-items:center;
+}
+.overview-hero h1{
+  font-size:34px;
+  margin:0 0 8px;
+  color:#0f2742;
+}
+.overview-hero p{
+  margin:0;
+  color:#607086;
+}
+.overview-main-progress{
+  background:#fff;
+  border:1px solid #e5edf8;
+  border-radius:22px;
+  padding:18px;
+}
+.overview-main-progress .big-percent{
+  font-size:44px;
+  font-weight:900;
+  color:var(--blue);
+  line-height:1;
+}
+.overview-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(140px,1fr));
+  gap:14px;
+}
+.overview-card{
+  background:#fff;
+  border:1px solid #e5edf8;
+  border-radius:22px;
+  padding:16px;
+  box-shadow:0 12px 25px rgba(0,0,0,.08);
+}
+.overview-card .label{
+  color:#64748b;
+  font-size:13px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.overview-card .value{
+  font-size:28px;
+  font-weight:900;
+  color:#102033;
+  margin-top:8px;
+}
+.overview-card .sub{
+  color:#64748b;
+  font-size:13px;
+  margin-top:4px;
+}
+.skill-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(145px,1fr));
+  gap:14px;
+}
+.skill-card{
+  background:#fff;
+  border:1px solid #e5edf8;
+  border-radius:22px;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  box-shadow:0 12px 25px rgba(0,0,0,.08);
+}
+.ring{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:conic-gradient(var(--blue) calc(var(--p,0)*1%), #e8f1ff 0);
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+}
+.ring::after{
+  content:attr(data-value);
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  background:#fff;
+  display:grid;
+  place-items:center;
+  font-size:12px;
+  font-weight:900;
+  color:var(--blue);
+}
+.skill-title{
+  font-weight:900;
+  color:#102033;
+  margin-bottom:3px;
+}
+.skill-meta{
+  font-size:13px;
+  color:#64748b;
+}
+.insight-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.insight-card{
+  background:#fff;
+  border:1px solid #e5edf8;
+  border-radius:22px;
+  padding:18px;
+  box-shadow:0 12px 25px rgba(0,0,0,.08);
+}
+.insight-card h3{
+  margin-bottom:12px;
+}
+.mastery-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid #edf2f8;
+}
+.mastery-row:last-child{border-bottom:0}
+.mastery-name{
+  font-weight:800;
+  color:#1f2937;
+}
+.mastery-meta{
+  color:#64748b;
+  font-size:12px;
+  margin-top:3px;
+}
+.mastery-percent{
+  font-weight:900;
+  color:var(--blue);
+}
+.mini-bar{
+  height:7px;
+  background:#e8f1ff;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:7px;
+}
+.mini-bar span{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,var(--blue),var(--yellow));
+}
+.achievement-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+.achievement-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 11px;
+  border-radius:99px;
+  background:#f8fbff;
+  border:1px solid #dbeafe;
+  color:#17406f;
+  font-size:13px;
+  font-weight:800;
+}
+.dashboard-muted{
+  color:#64748b;
+  font-size:14px;
+}
+.dashboard-section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:12px;
+  margin:4px 0 0;
+}
+.dashboard-section-title h2{
+  margin:0;
+}
+.dashboard-section-title p{
+  margin:0;
+}
+@media(max-width:900px){
+  .overview-hero{grid-template-columns:1fr}
+  .overview-grid,.skill-grid,.insight-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .overview-grid,.skill-grid,.insight-grid{grid-template-columns:1fr}
+  .overview-hero h1{font-size:28px}
+}
+
 @media(max-width:800px){
   .task-layout{grid-template-columns:1fr;height:auto}
   .panel{max-height:none}
@@ -345,6 +554,8 @@ button:disabled{
       </div>
       <button class="secondary" onclick="logout()">Logout</button>
     </div>
+
+    <div id="studentOverview" class="student-overview"></div>
 
     <div class="card">
       <h2>Lessons</h2>
@@ -513,6 +724,9 @@ async function loadDashboard(){
     return;
   }
 
+  renderStudentOverview(res.lessons, null, null, null);
+  hydrateStudentOverview(res.lessons);
+
   res.lessons.forEach(l=>{
     const div=document.createElement('div');
     div.className='lesson-card';
@@ -524,6 +738,263 @@ async function loadDashboard(){
     div.onclick=()=>openLesson(l.lesson);
     grid.appendChild(div);
   });
+}
+
+async function apiSilent(action, data = {}) {
+  const res = await fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: {'Content-Type': 'text/plain;charset=utf-8'},
+    body: JSON.stringify({
+      action: action,
+      ...data
+    })
+  });
+  return await res.json();
+}
+
+function clampPercent(value){
+  const n = Number(value || 0);
+  if(!isFinite(n)) return 0;
+  return Math.max(0, Math.min(100, Math.round(n)));
+}
+
+function lessonStats(lessons){
+  const totalTasks = (lessons || []).reduce((sum,l)=>sum + Number(l.totalTasks || 0),0);
+  const completedTasks = (lessons || []).reduce((sum,l)=>sum + Number(l.completed || 0),0);
+  const completedLessons = (lessons || []).filter(l => Number(l.totalTasks || 0) > 0 && Number(l.completed || 0) >= Number(l.totalTasks || 0)).length;
+  const activeLessons = (lessons || []).filter(l => Number(l.totalTasks || 0) > 0).length;
+  const completion = totalTasks ? Math.round((completedTasks / totalTasks) * 100) : 0;
+  return {
+    totalTasks,
+    completedTasks,
+    remainingTasks: Math.max(0,totalTasks-completedTasks),
+    completedLessons,
+    activeLessons,
+    completion
+  };
+}
+
+function normalizeSkillName(skill){
+  const s = String(skill || '').toLowerCase();
+  if(s.includes('listen')) return 'Listening';
+  if(s.includes('read')) return 'Reading';
+  if(s.includes('writ')) return 'Writing';
+  if(s.includes('speak')) return 'Speaking';
+  return skill ? String(skill) : 'Other';
+}
+
+function cleanQuestionTypeName(name){
+  const raw = String(name || '').trim();
+  if(!raw) return 'Question type';
+  const map = {
+    tfng:'T/F/NG',
+    truefalsenotgiven:'T/F/NG',
+    ynng:'Y/N/NG',
+    yesnonotgiven:'Y/N/NG',
+    mcq:'Multiple Choice',
+    gapfill:'Gap Fill',
+    gapfilling:'Gap Fill',
+    matching:'Matching',
+    matchingheadings:'Matching Headings',
+    matchingfeatures:'Matching Features',
+    matchinginformation:'Matching Information'
+  };
+  const key = normalizeType(raw);
+  return map[key] || raw.replace(/_/g,' ').replace(/\b\w/g, c=>c.toUpperCase());
+}
+
+function renderRing(percent){
+  const p = clampPercent(percent);
+  return `<div class="ring" style="--p:${p}" data-value="${p}%"></div>`;
+}
+
+function renderStudentOverview(lessons, dashboard, analytics, skillStats){
+  const box = qs('studentOverview');
+  if(!box) return;
+
+  const base = lessonStats(lessons || []);
+  const dash = dashboard || {};
+  const completedTasks = Number(dash.completedTasks ?? base.completedTasks);
+  const totalTasks = Number(dash.totalTasks ?? base.totalTasks);
+  const courseCompletion = clampPercent(dash.courseCompletion ?? base.completion);
+  const remainingTasks = Math.max(0, totalTasks - completedTasks);
+  const writingSubmitted = Number(dash.writingSubmitted || 0);
+
+  const skillNames = ['Listening','Reading','Writing','Speaking'];
+  const skills = skillNames.map(name=>{
+    const item = skillStats && skillStats[name] ? skillStats[name] : {total:0,completed:0};
+    const pct = item.total ? Math.round((item.completed / item.total) * 100) : 0;
+    return {name, total:item.total || 0, completed:item.completed || 0, pct};
+  });
+
+  const sortedAnalytics = (analytics || [])
+    .filter(a => Number(a.total || 0) > 0)
+    .map(a => ({
+      name: cleanQuestionTypeName(a.questionType),
+      correct: Number(a.correct || 0),
+      total: Number(a.total || 0),
+      accuracy: clampPercent(a.accuracy)
+    }));
+
+  const focus = [...sortedAnalytics].sort((a,b)=>a.accuracy-b.accuracy).slice(0,3);
+  const strengths = [...sortedAnalytics].sort((a,b)=>b.accuracy-a.accuracy).slice(0,3);
+
+  const achievements = [];
+  if(completedTasks > 0) achievements.push('First task completed');
+  if(completedTasks >= 10) achievements.push('10 tasks completed');
+  if(completedTasks >= 25) achievements.push('25 tasks completed');
+  if(completedTasks >= 50) achievements.push('50 tasks completed');
+  if(courseCompletion >= 25) achievements.push('25% course progress');
+  if(courseCompletion >= 50) achievements.push('50% course progress');
+  if(writingSubmitted > 0) achievements.push('Writing submitted');
+  if(sortedAnalytics.length) achievements.push('Analytics unlocked');
+
+  box.innerHTML = `
+    <div class="overview-hero">
+      <div>
+        <h1>Welcome, ${escapeHtml(STUDENT?.fullName || 'Student')}</h1>
+        <p>Track your practice, completion, and question-type performance in one place.</p>
+        <div class="achievement-list">
+          ${(achievements.length ? achievements : ['Start completing tasks to unlock progress badges']).map(a=>`
+            <span class="achievement-pill">${escapeHtml(a)}</span>
+          `).join('')}
+        </div>
+      </div>
+      <div class="overview-main-progress">
+        <div class="dashboard-muted">Overall course progress</div>
+        <div class="big-percent">${courseCompletion}%</div>
+        <div class="progress"><span style="width:${courseCompletion}%"></span></div>
+        <p style="margin:12px 0 0;">${completedTasks}/${totalTasks || 0} tasks completed</p>
+      </div>
+    </div>
+
+    <div class="overview-grid">
+      <div class="overview-card">
+        <div class="label">Completed Tasks</div>
+        <div class="value">${completedTasks}</div>
+        <div class="sub">officially completed</div>
+      </div>
+      <div class="overview-card">
+        <div class="label">Remaining Tasks</div>
+        <div class="value">${remainingTasks}</div>
+        <div class="sub">still available</div>
+      </div>
+      <div class="overview-card">
+        <div class="label">Completed Lessons</div>
+        <div class="value">${base.completedLessons}</div>
+        <div class="sub">out of ${base.activeLessons || 48} active lessons</div>
+      </div>
+      <div class="overview-card">
+        <div class="label">Writing</div>
+        <div class="value">${writingSubmitted}</div>
+        <div class="sub">submitted responses</div>
+      </div>
+    </div>
+
+    <div class="dashboard-section-title">
+      <div>
+        <h2>Skill Balance</h2>
+        <p>Completion by skill area. This is based on tasks completed, not predicted band score.</p>
+      </div>
+    </div>
+    <div class="skill-grid">
+      ${skills.map(s=>`
+        <div class="skill-card">
+          ${renderRing(s.pct)}
+          <div>
+            <div class="skill-title">${escapeHtml(s.name)}</div>
+            <div class="skill-meta">${s.completed}/${s.total} tasks completed</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="insight-grid">
+      <div class="insight-card">
+        <h3>Focus Areas</h3>
+        ${focus.length ? focus.map(a=>`
+          <div class="mastery-row">
+            <div>
+              <div class="mastery-name">${escapeHtml(a.name)}</div>
+              <div class="mastery-meta">${a.correct}/${a.total} correct</div>
+              <div class="mini-bar"><span style="width:${a.accuracy}%"></span></div>
+            </div>
+            <div class="mastery-percent">${a.accuracy}%</div>
+          </div>
+        `).join('') : '<p class="dashboard-muted">Complete objective tasks to see focus areas.</p>'}
+      </div>
+
+      <div class="insight-card">
+        <h3>Strengths</h3>
+        ${strengths.length ? strengths.map(a=>`
+          <div class="mastery-row">
+            <div>
+              <div class="mastery-name">${escapeHtml(a.name)}</div>
+              <div class="mastery-meta">${a.correct}/${a.total} correct</div>
+              <div class="mini-bar"><span style="width:${a.accuracy}%"></span></div>
+            </div>
+            <div class="mastery-percent">${a.accuracy}%</div>
+          </div>
+        `).join('') : '<p class="dashboard-muted">Your strongest question types will appear here after practice.</p>'}
+      </div>
+    </div>
+  `;
+}
+
+async function hydrateStudentOverview(lessons){
+  const box = qs('studentOverview');
+  if(!box || !STUDENT) return;
+
+  try{
+    const [dashboardRes, analyticsRes, skillStats] = await Promise.all([
+      apiSilent('getStudentDashboard',{student:STUDENT}).catch(()=>({ok:false})),
+      apiSilent('getStudentAnalytics',{studentID:STUDENT.studentID}).catch(()=>({ok:false})),
+      fetchSkillStats(lessons).catch(()=>null)
+    ]);
+
+    renderStudentOverview(
+      lessons,
+      dashboardRes && dashboardRes.ok ? dashboardRes.dashboard : null,
+      analyticsRes && analyticsRes.ok ? analyticsRes.analytics : null,
+      skillStats
+    );
+  }catch(e){
+    console.warn('Student overview could not fully load:', e);
+  }
+}
+
+async function fetchSkillStats(lessons){
+  const stats = {
+    Listening:{total:0,completed:0},
+    Reading:{total:0,completed:0},
+    Writing:{total:0,completed:0},
+    Speaking:{total:0,completed:0}
+  };
+
+  const activeLessons = (lessons || []).filter(l => Number(l.totalTasks || 0) > 0);
+
+  const batches = [];
+  for(let i=0;i<activeLessons.length;i+=6){
+    batches.push(activeLessons.slice(i,i+6));
+  }
+
+  for(const batch of batches){
+    const results = await Promise.all(batch.map(l =>
+      apiSilent('getTasksForLesson',{student:STUDENT,lesson:l.lesson}).catch(()=>({ok:false,tasks:[]}))
+    ));
+
+    results.forEach(res=>{
+      if(!res.ok || !res.tasks) return;
+      res.tasks.forEach(t=>{
+        const skill = normalizeSkillName(t.Skill);
+        if(!stats[skill]) stats[skill] = {total:0,completed:0};
+        stats[skill].total++;
+        if(t.completed) stats[skill].completed++;
+      });
+    });
+  }
+
+  return stats;
 }
 
 async function openLesson(lesson){
