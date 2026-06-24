@@ -629,7 +629,7 @@ button:disabled{
 </div>
 
 <script>
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxIgoq13JyxDe5PG_0XSsD3Qev7fL57Y9t9od26XU3yiy4LmvyN3RqeymHTvncTYU5CtQ/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDb9PCFgRum5fGKdW1Lb_e97UxIAkrZWTjOF1T3v46s8XjRdMbhcmgVdrdXddAO4ytFw/exec';
 
 let STUDENT = null;
 let CURRENT_LESSON = null;
@@ -1510,24 +1510,13 @@ function isMatchingType(type){
   return t.includes('matching') || t.includes('heading') || t.includes('features') || t.includes('information');
 }
 
-function isMultipleAnswerType(type){
-  const t = normalizeType(type);
-  return (
-    t === 'multiselect' ||
-    t === 'multiplesanswer' ||
-    t === 'multipleanswer' ||
-    t === 'multi' ||
-    t.includes('multipleanswer')
-  );
-}
-
 function questionGroupTitle(type){
   const t = normalizeType(type);
   if(isTfngType(type)) return 'TRUE / FALSE / NOT GIVEN';
   if(isYnngType(type)) return 'YES / NO / NOT GIVEN';
   if(isMatchingType(type)) return 'Matching';
   if(t.includes('mcq') || t.includes('multiplechoice')) return 'Multiple Choice';
-  if(isMultipleAnswerType(type) || t.includes('multi')) return 'Multiple Answers';
+  if(t.includes('multi')) return 'Multiple Answers';
   if(isGapfillType(type)) return 'Gap Fill';
   return String(type || 'Questions');
 }
@@ -1599,10 +1588,7 @@ function renderQuestionGroup(group, opts){
     }
   }
 
-  const body = isMultipleAnswerType(type)
-    ? renderMultipleAnswerGroup(group.questions)
-    : group.questions.map((q,idx)=>renderSingleQuestion(q, idx, opts, group)).join('');
-
+  const body = group.questions.map((q,idx)=>renderSingleQuestion(q, idx, opts, group)).join('');
   if(!body.trim() && !intro.trim()) return '';
 
   return `
@@ -1616,99 +1602,6 @@ function renderQuestionGroup(group, opts){
 
 function renderQuestions(questions, opts = {}){
   return groupQuestionsForDisplay(questions).map(group=>renderQuestionGroup(group, opts)).join('');
-}
-
-function wordNumberToInt(text){
-  const s = String(text || '').toLowerCase();
-  const map = {
-    one:1, two:2, three:3, four:4, five:5,
-    six:6, seven:7, eight:8, nine:9, ten:10
-  };
-  for(const key in map){
-    if(new RegExp('\\b' + key + '\\b').test(s)) return map[key];
-  }
-  const digit = s.match(/\b(\d+)\b/);
-  return digit ? Number(digit[1]) : null;
-}
-
-function renderMultipleAnswerGroup(questions){
-  const clusters = [];
-  (questions || []).forEach((q, idx)=>{
-    const key = [
-      String(q.QuestionText || '').trim().replace(/\s+/g,' '),
-      String(q.Options || '').trim()
-    ].join('||');
-
-    let cluster = clusters[clusters.length - 1];
-    if(!cluster || cluster.key !== key){
-      cluster = {key, questions:[], firstIndex:idx};
-      clusters.push(cluster);
-    }
-    cluster.questions.push(q);
-  });
-
-  return clusters.map(cluster=>{
-    const qsInCluster = cluster.questions || [];
-    const first = qsInCluster[0] || {};
-    const qNumbers = qsInCluster.map((q,idx)=>effectiveQuestionNo(q, idx)).filter(Boolean);
-    const firstNo = qNumbers[0] || '';
-    const lastNo = qNumbers[qNumbers.length - 1] || firstNo;
-    const rangeLabel = firstNo && lastNo && firstNo !== lastNo ? `${firstNo}–${lastNo}` : firstNo;
-    const questionText = String(first.QuestionText || '').trim();
-    const options = String(first.Options || '').split('|').map(x=>x.trim()).filter(Boolean);
-    const requiredFromText = wordNumberToInt(questionText);
-    const required = requiredFromText || Math.max(1, qNumbers.length || 1);
-    const safeName = `q_multi_${String(firstNo || cluster.firstIndex).replace(/[^a-zA-Z0-9_-]/g,'_')}_${String(lastNo || cluster.firstIndex).replace(/[^a-zA-Z0-9_-]/g,'_')}`;
-    const nosValue = qNumbers.join('|');
-
-    return `
-      <div class="question">
-        <strong>${rangeLabel ? 'Questions ' + escapeHtml(rangeLabel) + '. ' : ''}${escapeHtml(questionText || 'Choose the correct answers.')}</strong>
-        <p class="dashboard-muted" style="margin:8px 0 10px;">Choose ${required} answer${required === 1 ? '' : 's'}.</p>
-        <div class="options">
-          ${options.map((o,i)=>{
-            const letter = String.fromCharCode(65+i);
-            return `
-              <label>
-                <input
-                  type="checkbox"
-                  class="multi-answer-choice"
-                  name="${escapeAttr(safeName)}"
-                  data-multi-nos="${escapeAttr(nosValue)}"
-                  data-max="${escapeAttr(required)}"
-                  value="${letter}"
-                  onchange="limitMultipleAnswerChoices(this)">
-                ${letter}. ${escapeHtml(o)}
-              </label>
-            `;
-          }).join('')}
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function limitMultipleAnswerChoices(changedBox){
-  const name = changedBox && changedBox.name;
-  if(!name) return;
-  const group = [...document.querySelectorAll(`input[type="checkbox"][name="${cssEscape(name)}"]`)];
-  const max = Number(changedBox.dataset.max || 0);
-  if(!max) return;
-
-  const checked = group.filter(x=>x.checked);
-  if(checked.length > max){
-    changedBox.checked = false;
-  }
-}
-
-function checkedMultipleAnswersForNo(no){
-  const target = String(no);
-  return [...document.querySelectorAll('input[type="checkbox"][data-multi-nos]')]
-    .filter(el => {
-      const nums = String(el.dataset.multiNos || '').split('|').map(x=>x.trim());
-      return el.checked && nums.includes(target);
-    })
-    .map(el => el.value);
 }
 
 function renderSingleQuestion(q, idx, opts = {}, group = null){
@@ -1757,10 +1650,14 @@ function renderSingleQuestion(q, idx, opts = {}, group = null){
       </div>`;
   }
 
-  if(isMultipleAnswerType(type)){
-    // Multiple-answer questions are rendered once per combined question group by renderMultipleAnswerGroup().
-    // This fallback keeps a usable control if a single multiple-answer item is ever rendered directly.
-    return renderMultipleAnswerGroup([q]);
+  if(type==='multi_select' || type==='multiplesanswer' || type==='multipleanswer' || type==='multi'){
+    return `
+      <div class="question">
+        <strong>${escapeHtml(no)}. ${escapeHtml(questionText || 'Choose the correct answers.')}</strong>
+        <div class="options">
+          ${options.map(o=>`<label><input type="checkbox" name="q_${escapeAttr(no)}" value="${escapeAttr(o)}"> ${escapeHtml(o)}</label>`).join('')}
+        </div>
+      </div>`;
   }
 
   if(isGapfillType(type)){
@@ -1804,8 +1701,8 @@ function collectAnswers(){
       return;
     }
 
-    if(isMultipleAnswerType(type)){
-      const checked = checkedMultipleAnswersForNo(no);
+    if(type==='multi_select' || type==='multiplesanswer' || type==='multipleanswer' || type==='multi'){
+      const checked = checkedCheckboxesByName(radioName).map(x=>x.value);
       answers[no] = checked.join('|');
       return;
     }
