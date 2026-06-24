@@ -6,6 +6,69 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
+.result-screen{
+  min-height:calc(100vh - 130px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.result-card{
+  width:min(560px,100%);
+  text-align:center;
+  background:
+    radial-gradient(circle at top, rgba(255,212,59,.32), transparent 32%),
+    #ffffff;
+  border-radius:34px;
+  padding:34px 26px;
+  box-shadow:0 30px 80px rgba(0,0,0,.28);
+  animation:resultPop .35s ease-out;
+}
+.result-icon{
+  width:86px;
+  height:86px;
+  border-radius:50%;
+  margin:0 auto 16px;
+  background:#e8f1ff;
+  display:grid;
+  place-items:center;
+  font-size:42px;
+}
+.result-score{
+  font-size:56px;
+  font-weight:900;
+  color:var(--blue);
+  line-height:1;
+  margin:12px 0;
+}
+.result-accuracy{
+  font-size:22px;
+  font-weight:800;
+  color:#102033;
+  margin-bottom:18px;
+}
+.result-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:18px 0 22px;
+}
+.result-meta div{
+  background:#f4f8ff;
+  border:1px solid #e5edf8;
+  border-radius:16px;
+  padding:12px;
+  font-weight:800;
+}
+.result-note{
+  color:#64748b;
+  margin-bottom:22px;
+}
+@keyframes resultPop{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
 :root{
   --blue:#0066cc;
   --blue2:#004fa3;
@@ -1022,6 +1085,8 @@ async function openLesson(lesson){
       <h3>${t.Title}</h3>
       <p>${t.TaskType}</p>
       <p>${t.completed ? 'Official: '+t.officialScore : 'Not completed yet'}</p>
+${t.bestScore !== '' && t.bestScore !== undefined ? `<p>Best: ${t.bestScore}${t.officialScore ? '/' + String(t.officialScore).split('/')[1] : ''}</p>` : ''}
+
       <p>Attempts: ${t.attempts}</p>
     `;
     div.onclick=()=>openTask(t.TaskID);
@@ -1876,19 +1941,24 @@ async function submitCurrentTask(){
       return;
     }
 
-    qs('taskContainer').innerHTML=`
-      <div class="card">
-        <h2>Result</h2>
-        <div class="result">
-          Score: ${res.score}/${res.total}<br>
-          Accuracy: ${res.accuracy}%<br>
-          Attempt: ${res.attemptNo}<br>
-          ${res.isOfficial ? 'Official score locked.' : 'Practice attempt saved.'}
-        </div>
-        <br>
-        <button onclick="backToTasks()">Back to Tasks</button>
+  qs('taskContainer').innerHTML=`
+  <div class="result-screen">
+    <div class="result-card">
+      <div class="result-icon">${res.accuracy >= 80 ? '🏆' : res.accuracy >= 50 ? '✅' : '📘'}</div>
+      <h2>Result</h2>
+      <div class="result-score">${res.score}/${res.total}</div>
+      <div class="result-accuracy">Accuracy: ${res.accuracy}%</div>
+
+      <div class="result-meta">
+        <div>Attempt<br>${res.attemptNo}</div>
+        <div>${res.isOfficial ? 'Official' : 'Practice'}<br>${res.isOfficial ? 'Locked' : 'Saved'}</div>
       </div>
-    `;
+
+      <p class="result-note">${res.isOfficial ? 'Official score locked.' : 'Practice attempt saved.'}</p>
+      <button onclick="backToTasks()">Back to Tasks</button>
+    </div>
+  </div>
+`;
 
   }catch(err){
     console.error(err);
